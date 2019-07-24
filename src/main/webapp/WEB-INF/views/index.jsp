@@ -99,30 +99,26 @@
             Możesz sprawdzić czym się zajmują.</p>
 
         <ul class="help--slides-items">
-            <li>
-                <div class="col">
-                    <div class="title">Fundacja "Dbam o Zdrowie"</div>
-                    <div class="subtitle">Cel i misja: Pomoc dzieciom z ubogich rodzin.</div>
-                </div>
 
-                <div class="col">
-                    <div class="title">Fundacja "A kogo"</div>
-                    <div class="subtitle">Cel i misja: Pomoc wybudzaniu dzieci ze śpiączki.</div>
-                </div>
-            </li>
-
-            <li>
-                <div class="col">
-                    <div class="title">Fundacja “Dla dzieci"</div>
-                    <div class="subtitle">Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji życiowej.</div>
-                </div>
-                <div class="col">
-                    <div class="title">Fundacja “Bez domu”</div>
-                    <div class="subtitle">Cel i misja: Pomoc dla osób nie posiadających miejsca zamieszkania</div>
-                </div>
-
-            </li>
-
+            <%--TODO czy można to zrobić lepiej, jedyny pomysł jaki miałem, to na podstawie zmiennej varStatus,
+            doklejanie <li> lub </li> + dla listy nieparystej domknięcie ślepym elementem, w związku z tym dodanie css,
+            który nie wyświetli po pustym elementem linni odzielającej--%>
+            <c:forEach items="${institutions}" var="institution" varStatus="itemNumber">
+                <c:if test="${(itemNumber.count) % 2 != 0}">
+                    <li>
+                </c:if>
+                    <div class="col">
+                        <div class="title">${institution.name}</div>
+                        <div class="subtitle">${institution.description}</div>
+                    </div>
+                <c:if test="${(itemNumber.count) % 2 == 0}">
+                    </li>
+                </c:if>
+                <c:if test="${(itemNumber.count) == institutions.size() && institutions.size() % 2 != 0}">
+                        <div class="col last-odd"></div>
+                    </li>
+                </c:if>
+            </c:forEach>
         </ul>
     </div>
 

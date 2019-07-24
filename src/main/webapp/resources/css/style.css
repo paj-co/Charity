@@ -1456,6 +1456,10 @@ header nav ul li:last-of-type {
   margin-top: 25px;
   background-color: #bcbcbc;
 }
+.help--slides-items .last-odd:after {
+  width: 0;
+  display: none;
+}
 
 /* line 72, scss/modules/homepage-sections/_help.scss */
 .help--slides-items .col:last-child:after {
