@@ -28,22 +28,20 @@ public class HomeController {
     @ModelAttribute("handOverBags")
     public Long handOverBags(){
         Long bagQuantity = donationRepository.sumHandOverBags();
-        if(bagQuantity == null || bagQuantity == 0) {
+        if(bagQuantity == null) {
             return 0L;
         }
         return bagQuantity;
     }
 
     @ModelAttribute("supportedInstitutions")
-    public int supportedInstitutions(){
-        List<Institution> institutionList = donationRepository.sumSupportedInstitutions();
-        if (institutionList == null || institutionList.size() == 0) {
-            return 0;
+    public Long numberOfSupportedInstitutions(){
+        Long numberOfSuportedInstitutions = donationRepository.sumSupportedInstitutions();
+        if (numberOfSuportedInstitutions == null) {
+            return 0L;
         }
-        return institutionList.size();
+        return numberOfSuportedInstitutions;
     }
-
-
 
     @RequestMapping("/")
     public String homeAction(Model model){
