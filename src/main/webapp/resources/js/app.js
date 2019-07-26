@@ -164,6 +164,50 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$step.parentElement.hidden = this.currentStep >= 5;
 
       // TODO: get data from inputs and show them in summary
+      //Collecting data from inputs
+      //Data from step 1
+      let checkedCategoriesTable = document.querySelectorAll('div[data-step="1"] label input:checked');
+      let categories = '';
+      for(let i = 0; i < checkedCategoriesTable.length - 1; i++) {
+        categories += checkedCategoriesTable[i].dataset.name + ', ';
+      }
+      if(checkedCategoriesTable.length > 0) {
+        categories += checkedCategoriesTable[checkedCategoriesTable.length - 1].dataset.name;
+      }
+      //Data from step 2
+      let numberOfBags = document.querySelector('div[data-step="2"] input').value;
+      //Data from step 3
+      let institution = document.querySelector('div[data-step="3"] label input:checked').dataset.name;
+      //Data from step 4
+      let addressInfo = [];
+      document.querySelectorAll('div[data-step="4"] div label input, div label textarea').forEach(function (el) {
+        addressInfo.push(el.value);
+      });
+
+      //Displaying data in summary
+      let summary = document.querySelector('div[data-step="5"]');
+
+      let conjugateBags = 'worek';
+      if(numberOfBags >= 2 && numberOfBags <= 4) {
+        conjugateBags = "worki"
+      } else if (numberOfBags >= 5) {
+        conjugateBags = "worków"
+      }
+
+      let whatYouGive = summary.querySelector('.icon-bag').nextElementSibling;
+      whatYouGive.innerText = `${numberOfBags} ${conjugateBags} z ${categories}`;
+      let whomToGive = summary.querySelector('.icon-hand').nextElementSibling;
+      whomToGive.innerText = `Dla: ${institution}`;
+      let addressAndAdditionalInfoInSummary = summary.querySelectorAll('.address ul li');
+
+      for(let i = 0; i < addressAndAdditionalInfoInSummary.length; i++) {
+        let addressInfoTrimed = addressInfo[i].trim();
+        if(addressInfoTrimed === '') {
+          addressAndAdditionalInfoInSummary[i].innerText = 'Nie podano';
+        } else {
+          addressAndAdditionalInfoInSummary[i].innerText = addressInfo[i];
+        }
+      }
     }
 
   }

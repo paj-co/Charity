@@ -1,8 +1,8 @@
 package pl.coderslab.charity.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,11 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@NoArgsConstructor
-@Setter
-@Getter
 @Entity
-public class Donation {
+public @Data class Donation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +20,12 @@ public class Donation {
 
     private Integer quantity;
 
+    @ToString.Exclude
     @ManyToMany
     @JoinTable(name = "donations_categories", joinColumns = @JoinColumn(name ="donation_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "institution_id")
     private Institution institution;
@@ -39,9 +38,12 @@ public class Donation {
     @NotBlank
     private String zipCode;
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate pickUpDate;
     @NotNull
     private LocalTime pickUpTime;
     private String pickUpComment;
+    @NotBlank
+    private String phone;
 
 }
