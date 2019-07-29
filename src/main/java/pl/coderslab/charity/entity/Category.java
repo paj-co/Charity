@@ -1,19 +1,12 @@
 package pl.coderslab.charity.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor
-@Setter
-@Getter
-@ToString
 @Entity
-public class Category {
+public @Data class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

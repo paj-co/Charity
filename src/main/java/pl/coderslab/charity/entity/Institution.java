@@ -1,8 +1,8 @@
 package pl.coderslab.charity.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
-@NoArgsConstructor
-@Setter
-@Getter
 @Entity
-public class Institution {
+public @Data class Institution {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
