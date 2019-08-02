@@ -20,12 +20,10 @@ public @Data class Donation {
 
     private Integer quantity;
 
-    @ToString.Exclude
     @ManyToMany
     @JoinTable(name = "donations_categories", joinColumns = @JoinColumn(name ="donation_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
 
-    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "institution_id")
     private Institution institution;
@@ -38,7 +36,7 @@ public @Data class Donation {
     @NotBlank
     private String zipCode;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd") //iso znany format
     private LocalDate pickUpDate;
     @NotNull
     private LocalTime pickUpTime;
