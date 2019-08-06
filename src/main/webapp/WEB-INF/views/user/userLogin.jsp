@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
@@ -21,42 +21,24 @@
 
 <section class="login-page">
     <h2>Zaloguj się</h2>
-<%--    <form>--%>
-<%--        <div class="form-group">--%>
-<%--            <input type="email" name="email" placeholder="Email" />--%>
-<%--        </div>--%>
-<%--        <div class="form-group">--%>
-<%--            <input type="password" name="password" placeholder="Hasło" />--%>
-<%--            <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>--%>
-<%--        </div>--%>
-
-<%--        <div class="form-group form-group--buttons">--%>
-<%--            <a href="#" class="btn btn--without-border">Załóż konto</a>--%>
-<%--            <button class="btn" type="submit">Zaloguj się</button>--%>
-<%--        </div>--%>
-<%--        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-<%--    </form>--%>
-    <form:form method="post" modelAttribute="user">
-        <c:if test="${not empty loginError}" >
-            <p class="error">${loginError}</p>
-        </c:if>
+    <form method="post">
         <div class="form-group">
-            <form:input path="email" type="email" placeholder="Email" />
-            <form:errors path="email" cssClass="error" element="p" />
+            <input type="email" name="username" placeholder="Email" />
         </div>
         <div class="form-group">
-            <form:input path="password" type="password" placeholder="Hasło" />
-            <form:errors path="password" cssClass="error" element="p" />
-            <%--TODO pssword reset--%>
+            <input type="password" name="password" placeholder="Hasło" />
+            <c:if test="${not empty loginError}">
+                <p class="error">${loginError}</p>
+            </c:if>
             <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
         </div>
 
         <div class="form-group form-group--buttons">
-            <a href="/user/register" class="btn btn--without-border">Załóż konto</a>
+            <a href="#" class="btn btn--without-border">Załóż konto</a>
             <button class="btn" type="submit">Zaloguj się</button>
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    </form:form>
+    </form>
 </section>
 
 <%@ include file="../footer.jsp"%>

@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean passwordEqPassword2(User user, Model model) {
-        boolean isEq = user.getPassword().equals(user.getPassword2());
+        boolean isEq = user.getPassword().equals(user.getMatchingPassword());
         if(!isEq) {
             model.addAttribute("pass1NotEqPass2", "Hasła nie są równe!");
         }

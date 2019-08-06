@@ -15,18 +15,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//        .withUser("user1").password("{noop}user123").roles("USER")
-//        .and()
-//        .withUser("admin1").password("{noop}admin123").roles("ADMIN");
+        auth.userDetailsService(customUserDetailsService())
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-        .antMatchers("/", "/user/register", "/user/login").permitAll()
+        .antMatchers("/", "/register", "/login").permitAll()
         .antMatchers("/donation/**").hasAnyRole("USER", "ADMIN")
-        .and().formLogin().loginPage("/user/login")
+        .and().formLogin().loginPage("/login").defaultSuccessUrl("/", true).failureUrl("/login?error=true")
         .and().logout().logoutSuccessUrl("/").permitAll()
         .and().exceptionHandling().accessDeniedPage("/403");
     }

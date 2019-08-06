@@ -1,9 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<sec:authorize access="hasRole('USER')">
+<sec:authorize access="isAuthenticated()">
 <ul class="nav--actions">
     <li class="logged-user">
-        Witaj Agata
+        Witaj <sec:authentication property="principal.user.firstName"/>
         <ul class="dropdown">
             <li><a href="#">Profil</a></li>
             <li><a href="#">Ustawienia</a></li>
