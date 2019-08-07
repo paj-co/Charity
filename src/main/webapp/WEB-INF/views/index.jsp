@@ -1,7 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -15,8 +16,8 @@
 <body>
 <header class="header--main-page">
     <nav class="container container--70">
-        <!--TODO utworzenie 3 headerów zamiast jednego -->
         <%@ include file="action-header-not-logged.jsp"%>
+        <%@ include file="action-header-logged.jsp"%>
         <%@ include file="header.jsp"%>
     </nav>
 

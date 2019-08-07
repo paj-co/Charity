@@ -3,12 +3,11 @@ package pl.coderslab.charity.entity;
 
 
 import lombok.Data;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 public @Data class Institution {
@@ -21,5 +20,9 @@ public @Data class Institution {
     private String name;
     @NotBlank
     private String description;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "institution")
+    private List<Donation> donations;
 
 }
