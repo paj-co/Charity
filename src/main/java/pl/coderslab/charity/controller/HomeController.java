@@ -35,11 +35,11 @@ public class HomeController {
 
     @ModelAttribute("supportedInstitutions")
     public Long numberOfSupportedInstitutions(){
-        Long numberOfSuportedInstitutions = donationRepository.sumSupportedInstitutions();
-        if (numberOfSuportedInstitutions == null) {
+        Long numberOfSupportedInstitutions = donationRepository.sumSupportedInstitutions();
+        if (numberOfSupportedInstitutions == null) {
             return 0L;
         }
-        return numberOfSuportedInstitutions;
+        return numberOfSupportedInstitutions;
     }
 
     @RequestMapping("/")
