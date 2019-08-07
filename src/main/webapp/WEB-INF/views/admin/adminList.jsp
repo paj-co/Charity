@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Instytucje | Charity</title>
+    <title>Administratorzy | Charity</title>
 
     <!-- Custom fonts for this template -->
     <link href="/resources/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -50,14 +50,14 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Zaufane instytucje</h1>
-<%--                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>--%>
+                <h1 class="h3 mb-2 text-gray-800">Lista administratorów</h1>
+                <%--                <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>--%>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">
-                            <a href="/admin/institution/add">Dodaj nową instytucję</a>
+                            <a href="/admin/institution/add">Dodaj nowego administratora</a>
                         </h6>
                     </div>
                     <div class="card-body">
@@ -65,38 +65,48 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Nazwa</th>
-                                    <th>Opis</th>
-                                    <th>Współpraca</th>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>E-mail</th>
+                                    <th>Aktywny</th>
+                                    <th>Role</th>
                                     <th>Akcja</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Nazwa</th>
-                                    <th>Opis</th>
-                                    <th>Współpraca</th>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>E-mail</th>
+                                    <th>Aktywny</th>
+                                    <th>Role</th>
                                     <th>Akcja</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                <c:forEach items="${institutions}" var="institution" >
+                                <c:forEach items="${admins}" var="admin" >
                                     <tr>
-                                        <td>${institution.name}</td>
-                                        <td>${institution.description}</td>
+                                        <td>${admin.firstName}</td>
+                                        <td>${admin.lastName}</td>
+                                        <td>${admin.email}</td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${institution.activePartnership == true}">
-                                                    Aktywna
+                                                <c:when test="${admin.enabled == 1}">
+                                                    Aktywny
                                                 </c:when>
                                                 <c:otherwise>
-                                                    Nieaktywna
+                                                    Nieaktywny
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
                                         <td>
-                                            <a href="/admin/institution/update/${institution.id}">Edytuj</a>
-                                            <a href="/admin/institution/delete/confirm/${institution.id}">Usuń</a>
+                                            <c:forEach items="${admin.roles}" var="role" >
+                                                <div>${role.name}</div>
+                                            </c:forEach>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/list/update/${institution.id}">Edytuj</a>
+                                            <a href="/admin/list/delete/confirm/${institution.id}">Usuń</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
