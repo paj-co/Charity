@@ -13,21 +13,6 @@ public class AdminController {
         return "admin/adminDashboard";
     }
 
-    @GetMapping("/login")
-    public String adminLogin() {
-        return "admin/adminLogin";
-    }
-
-    @GetMapping("/register")
-    public String adminRegister() {
-        return "admin/adminRegister";
-    }
-
-    @GetMapping("/forgot-password")
-    public String adminForgotPassword() {
-        return "admin/adminForgotPassword";
-    }
-
     @GetMapping("/404")
     public String admin404() {
         return "admin/admin404";
@@ -42,6 +27,13 @@ public class AdminController {
     public String adminTables() {
         return "admin/adminTables";
     }
+
+    @GetMapping("/blank")
+    public String adminBlank() {
+        return "admin/adminBlank";
+    }
+
+
 
 
 

@@ -1,0 +1,7 @@
+.dropdown-item form input[type="submit"] {
+    background-color: transparent;
+    border: none;
+}
+.dropdown-item form  {
+    display: inline;
+}

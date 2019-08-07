@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import pl.coderslab.charity.service.SpringDataUserDetailsService;
 
 @Configuration
@@ -24,7 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
         .antMatchers("/", "/register", "/login").permitAll()
         .antMatchers("/donation/**").hasAnyRole("USER", "ADMIN")
-        .and().formLogin().loginPage("/login").defaultSuccessUrl("/", true).failureUrl("/login?error=true")
+        .antMatchers("/admin/**").hasRole("ADMIN")
+        .and().formLogin().loginPage("/login").successHandler(myAuthenticationSuccessHandler()).failureUrl("/login?error=true")
         .and().logout().logoutSuccessUrl("/").permitAll()
         .and().exceptionHandling().accessDeniedPage("/403");
     }
@@ -38,4 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SpringDataUserDetailsService customUserDetailsService() {
         return new SpringDataUserDetailsService();
     }
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+        return new MySimpleUrlAuthenticationSuccessHandler();
+    }
+
 }
