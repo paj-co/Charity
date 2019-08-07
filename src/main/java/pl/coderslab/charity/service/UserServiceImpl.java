@@ -10,6 +10,7 @@ import pl.coderslab.charity.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -44,5 +45,19 @@ public class UserServiceImpl implements UserService {
             model.addAttribute("pass1NotEqPass2", "Hasła nie są równe!");
         }
         return isEq;
+    }
+
+    @Override
+    public void addAdminRole(User user) {
+        Role adminRole = roleRepository.findRoleByName("ROLE_ADMIN");
+        Set<Role> roles;
+        if(user.getRoles().size() == 0) {
+            user.setRoles(new HashSet<>(Arrays.asList(adminRole)));
+        } else {
+            roles = user.getRoles();
+            roles.add(adminRole);
+            user.setRoles(roles);
+        }
+        userRepository.save(user);
     }
 }
