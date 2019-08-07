@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Charts</title>
+    <title>Edytuj Instytucję | Charity</title>
 
     <!-- Custom fonts for this template-->
     <link href="/resources/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -47,65 +48,58 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Charts</h1>
-                <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme. The charts below have been customized - for further customization options, please visit the <a target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js documentation</a>.</p>
+                <h1 class="h3 mb-4 text-gray-800">Dodaj nową instytucję</h1>
 
-                <!-- Content Row -->
-                <div class="row">
+            </div>
+            <!-- /.container-fluid -->
+            <div class="container">
 
-                    <div class="col-xl-8 col-lg-7">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <form:form class="user" method="post" modelAttribute="institution">
+                                        <form:hidden path="id" />
+                                        <div class="form-group row">
+                                            <div class="col-sm-8 mb-3 mb-sm-0">
+                                                <form:input path="name" class="form-control form-control-user" id="exampleFirstName" placeholder="Nazwa" />
+                                                <form:errors path="name" cssClass="errorCustom" element="p" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <form:input path="description" class="form-control form-control-user" id="exampleInputEmail" placeholder="Opis" />
+                                            <form:errors path="description" cssClass="errorCustom" element="p" />
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                Aktywne partnerstwo:
+                                                <form:checkbox path="activePartnership" cssClass="checkbox" />
+<%--                                                <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">--%>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-2 mb-3 mb-sm-0">
+                                                <input type="submit" value="Zapisz" class="btn btn-primary btn-user btn-block">
+                                            </div>
+                                            <div class="col-sm-2 mb-3 mb-sm-0">
+                                                <a href="/admin/institutions" class="cancelCustom">
+                                                    <button type="button" class="btn btn-danger btn-user btn-block">
+                                                        Anuluj
+                                                    </button>
+                                                </a>
+                                            </div>
 
-                        <!-- Area Chart -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="myAreaChart"></canvas>
+                                        </div>
+                                    </form:form>
                                 </div>
-                                <hr>
-                                Styling for the area chart can be found in the <code>/js/demo/chart-area-demo.js</code> file.
-                            </div>
-                        </div>
-
-                        <!-- Bar Chart -->
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-bar">
-                                    <canvas id="myBarChart"></canvas>
-                                </div>
-                                <hr>
-                                Styling for the bar chart can be found in the <code>/js/demo/chart-bar-demo.js</code> file.
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Donut Chart -->
-                    <div class="col-xl-4 col-lg-5">
-                        <div class="card shadow mb-4">
-                            <!-- Card Header - Dropdown -->
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
-                            </div>
-                            <!-- Card Body -->
-                            <div class="card-body">
-                                <div class="chart-pie pt-4">
-                                    <canvas id="myPieChart"></canvas>
-                                </div>
-                                <hr>
-                                Styling for the donut chart can be found in the <code>/js/demo/chart-pie-demo.js</code> file.
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div>
-            <!-- /.container-fluid -->
 
         </div>
         <!-- End of Main Content -->
@@ -153,14 +147,6 @@
 
 <!-- Custom scripts for all pages-->
 <script src="/resources/admin/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="/resources/admin/vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="/resources/admin/js/demo/chart-area-demo.js"></script>
-<script src="/resources/admin/js/demo/chart-pie-demo.js"></script>
-<script src="/resources/admin/js/demo/chart-bar-demo.js"></script>
 
 </body>
 

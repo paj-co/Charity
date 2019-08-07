@@ -37,7 +37,7 @@ public class DonationController {
 
     @ModelAttribute("institutions")
     public List<Institution> institutionList(){
-        return institutionRepository.findAll();
+        return institutionRepository.findInstitutionsByActivePartnershipOrderByName(true);
     }
 
     @ModelAttribute("categories")

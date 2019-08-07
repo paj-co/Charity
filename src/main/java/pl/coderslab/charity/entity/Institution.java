@@ -3,6 +3,8 @@ package pl.coderslab.charity.entity;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -24,5 +26,7 @@ public @Data class Institution {
     @ToString.Exclude
     @OneToMany(mappedBy = "institution")
     private List<Donation> donations;
+
+    private boolean activePartnership;
 
 }

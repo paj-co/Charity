@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>Dodaj Instytucję | Charity</title>
 
     <!-- Custom fonts for this template-->
     <link href="/resources/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -47,10 +48,57 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+                <h1 class="h3 mb-4 text-gray-800">Dodaj nową instytucję</h1>
 
             </div>
             <!-- /.container-fluid -->
+            <div class="container">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <form:form class="user" method="post" modelAttribute="institution">
+                                        <div class="form-group row">
+                                            <div class="col-sm-8 mb-3 mb-sm-0">
+                                                <form:input path="name" class="form-control form-control-user" id="exampleFirstName" placeholder="Nazwa" />
+                                                <form:errors path="name" cssClass="errorCustom" element="p" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <form:input path="description" class="form-control form-control-user" id="exampleInputEmail" placeholder="Opis" />
+                                            <form:errors path="description" cssClass="errorCustom" element="p" />
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                Aktywne partnerstwo:
+                                                <form:checkbox path="activePartnership" cssClass="checkbox" />
+<%--                                                <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">--%>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-2 mb-3 mb-sm-0">
+                                                <input type="submit" value="Zapisz" class="btn btn-primary btn-user btn-block">
+                                            </div>
+                                            <div class="col-sm-2 mb-3 mb-sm-0">
+                                                <a href="/admin/institutions" class="cancelCustom">
+                                                    <button type="button" class="btn btn-danger btn-user btn-block">
+                                                        Anuluj
+                                                    </button>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </form:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
         <!-- End of Main Content -->
