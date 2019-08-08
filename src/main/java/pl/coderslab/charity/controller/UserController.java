@@ -9,9 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.charity.entity.Donation;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.model.CurrentUser;
 import pl.coderslab.charity.model.UserDTO;
+import pl.coderslab.charity.repository.DonationRepository;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.UserService;
@@ -28,14 +30,16 @@ public class UserController {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private UserService userService;
+    private DonationRepository donationRepository;
 
     @Autowired
     public UserController( UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
-                           UserService userService) {
+                           UserService userService, DonationRepository donationRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+        this.donationRepository = donationRepository;
     }
 
     @GetMapping("/profile")
@@ -156,5 +160,27 @@ public class UserController {
         }
         return "redirect:/user/profile";
     }
+
+    //User donations
+
+    @GetMapping("/donations")
+    public String userDonations(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        model.addAttribute("donations", donationRepository.findDonationsByUser_Id(currentUser.getUser().getId()));
+        return "user/userDonations";
+    }
+
+    @GetMapping("/donation/{donationId}")
+    public String userDonationDetails(@PathVariable long donationId, @AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        Optional<Donation> donationOptional = donationRepository.findById(donationId);
+        if(donationOptional.isPresent()) {
+            if(donationOptional.get().getUser().getId().equals(currentUser.getUser().getId())) {
+                model.addAttribute("donation", donationOptional.get());
+                return "user/userDonationDetails";
+            }
+        }
+        return "redirect:/user/donations";
+    }
+
+
 
 }

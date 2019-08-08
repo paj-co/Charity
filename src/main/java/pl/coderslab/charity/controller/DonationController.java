@@ -46,8 +46,10 @@ public class DonationController {
     }
 
     @GetMapping("")
-    public String donationsForm(Model model) {
-        model.addAttribute("donation", new Donation());
+    public String donationsForm(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
+        Donation donation = new Donation();
+        donation.setUser(currentUser.getUser());
+        model.addAttribute("donation", donation);
         return "form";
     }
 
