@@ -44,7 +44,7 @@ public class InstitutionController {
             model.addAttribute("institution", institution.get());
             return "admin/adminInstitutionFormUpdate";
         }
-        return "redirect:admin/404";
+        return "redirect:/admin/404";
     }
 
     @PostMapping("/update/{institutionId}")
@@ -63,7 +63,7 @@ public class InstitutionController {
             model.addAttribute("institution", institution.get());
             return "admin/adminInstitutionConfirmDelete";
         }
-        return "redirect:admin/404";
+        return "redirect:/admin/404";
     }
 
     @GetMapping("/delete/{institutionId}")
@@ -73,7 +73,7 @@ public class InstitutionController {
             institutionRepository.delete(institution.get());
             return "redirect:/admin/institutions";
         }
-        return "redirect:admin/404";
+        return "redirect:/admin/404";
     }
 
 

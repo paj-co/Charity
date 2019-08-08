@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dodaj Instytucję | Charity</title>
+    <title>Uaktualnij Administratora| Charity</title>
 
     <!-- Custom fonts for this template-->
     <link href="/resources/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -48,7 +48,7 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Dodaj nową instytucję</h1>
+<%--                <h1 class="h3 mb-4 text-gray-800">Zaktualizuj dane administratora</h1>--%>
 
             </div>
             <!-- /.container-fluid -->
@@ -60,22 +60,45 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="p-5">
-                                    <form:form class="user" method="post" modelAttribute="institution">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Zaktualizuj dane administratora:</h1>
+                                    </div>
+                                    <form:form class="user" method="post" modelAttribute="userDTO">
+                                        <form:hidden path="id" />
                                         <div class="form-group row">
-                                            <div class="col-sm-8 mb-3 mb-sm-0">
-                                                <form:input path="name" class="form-control form-control-user" id="exampleFirstName" placeholder="Nazwa" />
-                                                <form:errors path="name" cssClass="errorCustom" element="p" />
+                                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                                Imię:
+                                                <form:input path="firstName" type="text" class="form-control form-control-user" id="exampleFirstName" />
+                                                <form:errors path="firstName" cssClass="errorCustom" element="p" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                Nazwisko:
+                                                <form:input path="lastName" type="text" class="form-control form-control-user" id="exampleLastName" />
+                                                <form:errors path="lastName" cssClass="errorCustom" element="p" />
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <form:input path="description" class="form-control form-control-user" id="exampleInputEmail" placeholder="Opis" />
-                                            <form:errors path="description" cssClass="errorCustom" element="p" />
+                                            <div class="col-sm-6">
+                                                Email
+                                                <form:input path="email" type="email" class="form-control form-control-user" id="exampleInputEmail" />
+                                                <form:errors path="password" cssClass="errorCustom" element="p" />
+                                            </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                                Aktywne partnerstwo:
-                                                <form:checkbox path="activePartnership" cssClass="checkbox" />
-<%--                                                <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">--%>
+                                            <div class="col-sm-1 mb-3 mb-sm-0">
+                                                Role:
+                                            </div>
+                                            <div class="col-sm-2 mb-3 mb-sm-0">
+                                                <form:hidden path="roles" />
+                                                <form:checkboxes path="rolesIdList" items="${userDTO.roles}" itemLabel="name" element="p" checked="true"/>
+                                                <c:forEach items="${remainingRoles}" var="remainingRole" >
+                                                    <p><form:checkbox path="rolesIdList" label="${remainingRole.name}" value="${remainingRole.id}" /></p>
+                                                </c:forEach>
+                                            </div>
+                                            <div class="col-sm-1">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                Użytkownik aktywny: <form:checkbox path="enabled" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -83,7 +106,7 @@
                                                 <input type="submit" value="Zapisz" class="btn btn-primary btn-user btn-block">
                                             </div>
                                             <div class="col-sm-2 mb-3 mb-sm-0">
-                                                <a href="/admin/institutions" class="cancelCustom">
+                                                <a href="/admin/list" class="cancelCustom">
                                                     <button type="button" class="btn btn-danger btn-user btn-block">
                                                         Anuluj
                                                     </button>
@@ -98,6 +121,7 @@
                 </div>
 
             </div>
+
 
         </div>
         <!-- End of Main Content -->

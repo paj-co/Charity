@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 public @Data class User {
 
-    //Main validation is made in UserRegister class
+    //Main validation is made in UserDTO class
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

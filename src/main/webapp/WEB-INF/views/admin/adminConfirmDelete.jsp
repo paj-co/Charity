@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dodaj Instytucję | Charity</title>
+    <title>Usuń admina | Charity</title>
 
     <!-- Custom fonts for this template-->
     <link href="/resources/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -48,7 +48,7 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Dodaj nową instytucję</h1>
+                <h1 class="h3 mb-4 text-gray-800">Usuwanie administratora!</h1>
 
             </div>
             <!-- /.container-fluid -->
@@ -60,37 +60,50 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="p-5">
-                                    <form:form class="user" method="post" modelAttribute="institution">
                                         <div class="form-group row">
                                             <div class="col-sm-8 mb-3 mb-sm-0">
-                                                <form:input path="name" class="form-control form-control-user" id="exampleFirstName" placeholder="Nazwa" />
-                                                <form:errors path="name" cssClass="errorCustom" element="p" />
+                                                <h5>Czy na pewno chczesz usunąć:</h5>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <form:input path="description" class="form-control form-control-user" id="exampleInputEmail" placeholder="Opis" />
-                                            <form:errors path="description" cssClass="errorCustom" element="p" />
-                                        </div>
+                                        <hr>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                                Aktywne partnerstwo:
-                                                <form:checkbox path="activePartnership" cssClass="checkbox" />
-<%--                                                <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">--%>
+                                                <h5>${admin.firstName} ${admin.lastName}, email: ${admin.email} ?</h5>
                                             </div>
+<%--                                            <div class="col-sm-4 mb-3 mb-sm-0">--%>
+<%--                                                Współpraca:--%>
+<%--                                                <c:choose>--%>
+<%--                                                    <c:when test="${institution.activePartnership == true}">--%>
+<%--                                                        Aktywna--%>
+<%--                                                    </c:when>--%>
+<%--                                                    <c:otherwise>--%>
+<%--                                                        Nieaktywna--%>
+<%--                                                    </c:otherwise>--%>
+<%--                                                </c:choose>--%>
+<%--                                            </div>--%>
                                         </div>
+
+<%--                                        <div class="form-group row">--%>
+<%--                                            <div class="col-sm-6 mb-3 mb-sm-0">--%>
+<%--                                                ${institution.description}--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
                                         <div class="form-group row">
                                             <div class="col-sm-2 mb-3 mb-sm-0">
-                                                <input type="submit" value="Zapisz" class="btn btn-primary btn-user btn-block">
-                                            </div>
-                                            <div class="col-sm-2 mb-3 mb-sm-0">
-                                                <a href="/admin/institutions" class="cancelCustom">
-                                                    <button type="button" class="btn btn-danger btn-user btn-block">
+                                                <a href="/admin/list" class="cancelCustom">
+                                                    <button type="button" class="btn btn-success btn-user btn-block">
                                                         Anuluj
                                                     </button>
                                                 </a>
                                             </div>
+                                            <div class="col-sm-2 mb-3 mb-sm-0">
+                                                <a href="/admin/delete/${admin.id}" class="cancelCustom">
+                                                    <button type="button" class="btn btn-danger btn-user btn-block">
+                                                        Usuń
+                                                    </button>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </form:form>
                                 </div>
                             </div>
                         </div>

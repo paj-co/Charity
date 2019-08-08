@@ -9,6 +9,8 @@ public interface UserService {
 
     void saveUser(User user);
 
+    void addAdminRole(User user);
+
     public boolean passwordEqPassword2(User user, Model model);
 
 }
