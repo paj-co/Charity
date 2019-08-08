@@ -40,11 +40,19 @@ public class AuthenticationController {
         user.setMatchingPassword(userDTO.getMatchingPassword());
         if (bindingResult.hasErrors()) {
 //            userService.passwordEqPassword2(user, model);
+            if(userService.checkIfEmailIsInDatabase(userDTO.getEmail())) {
+               model.addAttribute("emailAlreadyExistsError", "Na ten adres email założono już konto");
+            }
             return "user/userRegister";
         }
 //        if(!userService.passwordEqPassword2(user, model)) {
 //            return "user/userRegister";
 //        }
+        if(userService.checkIfEmailIsInDatabase(userDTO.getEmail())) {
+            model.addAttribute("emailAlreadyExistsError", "Na ten adres email założono już konto");
+            return "user/userRegister";
+        }
+
         userService.saveUser(user);
         return "redirect:/login";
     }

@@ -33,6 +33,7 @@ public @Data class UserDTO {
     private String password;
 
     private String matchingPassword;
+    private String oldPassword;
 
     private boolean enabled;
 
