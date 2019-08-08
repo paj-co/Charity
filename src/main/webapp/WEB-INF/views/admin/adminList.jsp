@@ -105,8 +105,9 @@
                                             </c:forEach>
                                         </td>
                                         <td>
-                                            <a href="/admin/list/update/${institution.id}">Edytuj</a>
-                                            <a href="/admin/list/delete/confirm/${institution.id}">Usuń</a>
+                                            <a href="/admin/update/${admin.id}">Edytuj</a>
+                                            <a href="/admin/update/password/${admin.id}">Zmień hasło</a>
+                                            <a href="/admin/delete/confirm/${admin.id}">Usuń</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
