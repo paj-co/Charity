@@ -5,7 +5,7 @@
     <li class="logged-user">
         Witaj <sec:authentication property="principal.user.firstName"/>
         <ul class="dropdown">
-            <li><a href="#">Profil</a></li>
+            <li><a href="/user/profile">Profil</a></li>
             <li><a href="#">Ustawienia</a></li>
             <li><a href="#">Moje zbiórki</a></li>
             <li>
