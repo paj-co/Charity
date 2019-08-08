@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
     public boolean passwordEqPassword2(User user, Model model) {
         boolean isEq = user.getPassword().equals(user.getMatchingPassword());
         if(!isEq) {
@@ -59,5 +60,14 @@ public class UserServiceImpl implements UserService {
             user.setRoles(roles);
         }
         userRepository.save(user);
+    }
+
+    @Override
+    public boolean checkIfEmailIsInDatabase(String email) {
+        User user = userRepository.findUserByEmail(email);
+        if (user != null) {
+            return true;
+        }
+        return false;
     }
 }

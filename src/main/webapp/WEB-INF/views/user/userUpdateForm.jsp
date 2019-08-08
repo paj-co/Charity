@@ -25,9 +25,12 @@
     <form:form method="post" modelAttribute="userDTO">
         <form:hidden path="id" />
         <div class="form-group fontCustom">
-        Imię:
+        E-mail:
         <form:input path="email" type="text" placeholder="Imię" />
         <form:errors path="email" cssClass="error" element="p"/>
+            <c:if test="${not empty emailAlreadyExistsError}">
+                <p class="error">${emailAlreadyExistsError}</p>
+            </c:if>
         </div>
         <div class="form-group fontCustom">
             Imię:

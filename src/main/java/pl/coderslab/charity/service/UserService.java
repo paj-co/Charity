@@ -13,4 +13,6 @@ public interface UserService {
 
     public boolean passwordEqPassword2(User user, Model model);
 
+    public boolean checkIfEmailIsInDatabase(String email);
+
 }

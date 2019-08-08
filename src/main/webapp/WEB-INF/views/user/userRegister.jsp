@@ -24,6 +24,9 @@
         <div class="form-group">
             <form:input path="email" type="email" placeholder="Email" />
             <form:errors path="email" cssClass="error" element="p"  />
+            <c:if test="${not empty emailAlreadyExistsError}">
+                <p class="error">${emailAlreadyExistsError}</p>
+            </c:if>
         </div>
         <div class="form-group">
             <form:input path="firstName" type="text" placeholder="Imię" />

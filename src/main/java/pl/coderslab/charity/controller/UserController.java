@@ -14,6 +14,7 @@ import pl.coderslab.charity.model.CurrentUser;
 import pl.coderslab.charity.model.UserDTO;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
+import pl.coderslab.charity.service.UserService;
 import pl.coderslab.charity.validation.ValidationGroupChangeUserData;
 import pl.coderslab.charity.validation.ValidationGroupChangeUserPassword;
 
@@ -26,12 +27,15 @@ public class UserController {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private UserService userService;
 
     @Autowired
-    public UserController( UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserController( UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
+                           UserService userService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
     }
 
     @GetMapping("/profile")
@@ -67,7 +71,9 @@ public class UserController {
     }
 
     @PostMapping("/update/{userId}")
-    public String userUpdate(@AuthenticationPrincipal CurrentUser currentUser, @PathVariable long userId, @ModelAttribute @Validated({ValidationGroupChangeUserData.class}) UserDTO userDTO, BindingResult bindingResult) {
+    public String userUpdate(@AuthenticationPrincipal CurrentUser currentUser, @PathVariable long userId,
+                             @ModelAttribute @Validated({ValidationGroupChangeUserData.class}) UserDTO userDTO,
+                             BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             return "user/userUpdateForm";
         }
@@ -75,6 +81,14 @@ public class UserController {
         if(userOptional.isPresent()) {
 
             User user = currentUser.getUser();
+
+            if(!userDTO.getEmail().equals(user.getEmail())) {
+                if(userService.checkIfEmailIsInDatabase(userDTO.getEmail())) {
+                    model.addAttribute("emailAlreadyExistsError", "Na ten adres e-mail założono już konto");
+                    return "user/userUpdateForm";
+                }
+            }
+
             user.setFirstName(userDTO.getFirstName());
             user.setLastName(userDTO.getLastName());
             user.setEmail(userDTO.getEmail());
