@@ -17,3 +17,7 @@ a.cancelCustom {
     text-decoration: none;
     display: block;
 }
+
+div.sizeCustom{
+    font-size: 40px;
+}

@@ -1,6 +1,7 @@
 package pl.coderslab.charity.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.entity.Institution;
 import pl.coderslab.charity.entity.Role;
 import pl.coderslab.charity.entity.User;
+import pl.coderslab.charity.model.CurrentUser;
 import pl.coderslab.charity.model.NewAdmins;
 import pl.coderslab.charity.model.UserDTO;
 import pl.coderslab.charity.repository.InstitutionRepository;
@@ -166,8 +168,6 @@ public class AdminController {
         }
         return "redirect:/admin/404";
     }
-//---------------------------------------------------------------------------
-
 
     @GetMapping("/update/password/{adminId}")
     public String adminUpdatePassword(@PathVariable long adminId, Model model) {
@@ -207,6 +207,29 @@ public class AdminController {
         return "redirect:/admin/404";
     }
 
+    @GetMapping("/delete/confirm/{adminId}")
+    public String adminDeleteConfirm(@PathVariable long adminId, Model model) {
+        Optional<User> admin = userRepository.findById(adminId);
+        if(admin.isPresent()) {
+            model.addAttribute("admin", admin.get());
+            return "admin/adminConfirmDelete";
+        }
+        return "redirect:/admin/404";
+    }
+
+    @GetMapping("/delete/{adminId}")
+    public String adminDelete(@PathVariable long adminId, @AuthenticationPrincipal CurrentUser customUser) {
+        User entityUser = customUser.getUser();
+        Optional<User> admin = userRepository.findById(adminId);
+        if(admin.isPresent()) {
+            if(entityUser.getId().equals(admin.get().getId())) {
+                return "admin/adminDeleteError";
+            }
+            userRepository.delete(admin.get());
+            return "redirect:/admin/list";
+        }
+        return "redirect:/admin/404";
+    }
 
 
 
