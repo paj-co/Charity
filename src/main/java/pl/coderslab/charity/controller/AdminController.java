@@ -196,11 +196,9 @@ public class AdminController {
         if(userOptional.isPresent()) {
 
             User user = userOptional.get();
-
             if(userDTO.getPassword().length() > 0 && userDTO.getPassword() != null) {
                 user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             }
-
             userRepository.save(user);
             return "redirect:/admin/list";
         }
@@ -231,9 +229,130 @@ public class AdminController {
         return "redirect:/admin/404";
     }
 
+    //User management ------------------------------------------------------------------
 
+    @GetMapping("/user/list")
+    public String adminUserList() {
+        return "admin/adminUserList";
+    }
 
+    @GetMapping("/user/update/{userId}")
+    public String adminUserUpdate(@PathVariable long userId, Model model) {
+        Optional<User> adminOptional = userRepository.findById(userId);
+        if(adminOptional.isPresent()) {
+            User user = adminOptional.get();
+            List<Role> allRoles = roleRepository.findAll();
+            allRoles.removeAll(user.getRoles());
 
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setFirstName(user.getFirstName());
+            userDTO.setLastName(user.getLastName());
+            if(user.getEnabled() == 1) {
+                userDTO.setEnabled(true);
+            } else {
+                userDTO.setEnabled(false);
+            }
+            userDTO.setRoles(user.getRoles());
+
+            model.addAttribute("remainingRoles", allRoles);
+            model.addAttribute("userDTO", userDTO);
+            return "admin/user/adminUserUpdateForm";
+        }
+        return "redirect:/admin/404";
+    }
+
+    @PostMapping("/user/update/{userId}")
+    public String adminUserUpdate(@PathVariable long userId, @ModelAttribute @Validated({ValidationGroupChangeUserData.class}) UserDTO userDTO, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "admin/user/adminUserUpdateForm";
+        }
+        Optional<User> userOptional = userRepository.findById(userDTO.getId());
+        if(userOptional.isPresent()) {
+
+            User user = userOptional.get();
+            user.setFirstName(userDTO.getFirstName());
+            user.setLastName(userDTO.getLastName());
+            user.setEmail(userDTO.getEmail());
+            if(userDTO.isEnabled()) {
+                user.setEnabled(1);
+            } else {
+                user.setEnabled(0);
+            }
+            Set<Role> roles = new HashSet<>();
+            for(int roleId : userDTO.getRolesIdList()) {
+                Optional<Role> role = roleRepository.findById(roleId);
+                if(role.isPresent()) {
+                    roles.add(role.get());
+                }
+            }
+            user.setRoles(roles);
+            userRepository.save(user);
+            return "redirect:/admin/user/list";
+        }
+        return "redirect:/admin/404";
+    }
+
+    @GetMapping("/user/update/password/{userId}")
+    public String adminUserUpdatePassword(@PathVariable long userId, Model model) {
+        Optional<User> adminOptional = userRepository.findById(userId);
+        if(adminOptional.isPresent()) {
+            User user = adminOptional.get();
+
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setFirstName(user.getFirstName());
+            userDTO.setLastName(user.getLastName());
+
+            model.addAttribute("userDTO", userDTO);
+            return "admin/user/adminUserUpdatePasswordForm";
+        }
+        return "redirect:/admin/404";
+    }
+
+    @PostMapping("/user/update/password/{userId}")
+    public String adminUserUpdatePassword(@PathVariable long userId, @ModelAttribute @Validated({ValidationGroupChangeUserPassword.class}) UserDTO userDTO, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "admin/user/adminUserUpdatePasswordForm";
+        }
+        Optional<User> userOptional = userRepository.findById(userDTO.getId());
+        if(userOptional.isPresent()) {
+
+            User user = userOptional.get();
+            if(userDTO.getPassword().length() > 0 && userDTO.getPassword() != null) {
+                user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            }
+            userRepository.save(user);
+            return "redirect:/admin/user/list";
+        }
+        return "redirect:/admin/404";
+    }
+
+    @GetMapping("/user/delete/confirm/{adminId}")
+    public String adminUserDeleteConfirm(@PathVariable long adminId, Model model) {
+        Optional<User> user = userRepository.findById(adminId);
+        if(user.isPresent()) {
+            model.addAttribute("user", user.get());
+            return "admin/user/adminUserConfirmDelete";
+        }
+        return "redirect:/admin/404";
+    }
+
+    @GetMapping("/user/delete/{adminId}")
+    public String adminUserDelete(@PathVariable long adminId, @AuthenticationPrincipal CurrentUser customUser) {
+        User entityUser = customUser.getUser();
+        Optional<User> admin = userRepository.findById(adminId);
+        if(admin.isPresent()) {
+            if(entityUser.getId().equals(admin.get().getId())) {
+                return "admin/adminDeleteError";
+            }
+            userRepository.delete(admin.get());
+            return "redirect:/admin/user/list";
+        }
+        return "redirect:/admin/404";
+    }
 
 
 
