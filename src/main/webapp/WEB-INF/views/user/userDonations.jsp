@@ -27,28 +27,49 @@
             <thead>
                 <tr>
                     <th>Instytucja</th>
-                    <th>Kategorie</th>
-                    <th>Ilość worków</th>
+<%--                    <th>Kategorie</th>--%>
+<%--                    <th>Worki</th>--%>
 <%--                    <th>Adres odbioru</th>--%>
 <%--                    <th>Data i czas odbioru</th>--%>
 <%--                    <th>Uwagi dla kuriera</th>--%>
-                    <th>Odebrane</th>
-                    <th>Data odebrania</th>
-                    <th>Data utworzenia</th>
+                    <th>
+                        Utworzono
+                        <a href="/user/donations?sort=created">
+                            <button class="sortButton">
+                                Sortuj
+                            </button>
+                        </a>
+                    </th>
+                    <th>
+                        Odebrane
+                        <a href="/user/donations?sort=picked-up">
+                            <button class="sortButton">
+                                Sortuj
+                            </button>
+                        </a>
+                    </th>
+                    <th>
+                        Data odebrania
+                        <a href="/user/donations?sort=take-over-date">
+                            <button class="sortButton">
+                                Sortuj
+                            </button>
+                        </a>
+                    </th>
                     <th>Akcja</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>Instytucja</th>
-                    <th>Kategorie</th>
-                    <th>Ilość worków</th>
+<%--                    <th>Kategorie</th>--%>
+<%--                    <th>Worki</th>--%>
 <%--                    <th>Adres odbioru</th>--%>
 <%--                    <th>Data i czas odbioru</th>--%>
 <%--                    <th>Uwagi dla kuriera</th>--%>
+                    <th>Utworzono</th>
                     <th>Odebrane</th>
                     <th>Data odebrania</th>
-                    <th>Data utworzenia</th>
                     <th>Akcja</th>
                 </tr>
             </tfoot>
@@ -56,12 +77,12 @@
             <c:forEach items="${donations}" var="donation" >
                 <tr>
                     <td>${donation.institution.name}</td>
-                    <td>
-                        <c:forEach items="${donation.categories}" var="category">
-                            <span style="display: block"> ${category.name}</span>
-                        </c:forEach>
-                    </td>
-                    <td>${donation.quantity}</td>
+<%--                    <td>--%>
+<%--                        <c:forEach items="${donation.categories}" var="category">--%>
+<%--                            <span style="display: block"> ${category.name}</span>--%>
+<%--                        </c:forEach>--%>
+<%--                    </td>--%>
+<%--                    <td>${donation.quantity}</td>--%>
 <%--                    <td>--%>
 <%--                        ${donation.street}--%>
 <%--                        ${donation.city}--%>
@@ -73,7 +94,8 @@
 <%--                            ${donation.pickUpTime}--%>
 <%--                    </td>--%>
 <%--                    <td>${donation.pickUpComment}</td>--%>
-                    <td>
+                    <td style="text-align: center">${donation.created}</td>
+                    <td style="text-align: center">
                         <c:choose>
                             <c:when test="${donation.pickedUp == true}">
                                 Tak
@@ -83,9 +105,18 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td>${donation.takeOverDate}</td>
-                    <td>${donation.created}</td>
-                    <td>
+                <%--<td>${donation.takeOverDate}</td>--%>
+                    <td style="text-align: center">
+                        <c:choose>
+                            <c:when test="${empty donation.takeOverDate}">
+                                brak
+                            </c:when>
+                            <c:otherwise>
+                                ${donation.takeOverDate}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td style="text-align: center">
                         <a style="color: #0f6848; font-weight: bold" href="/user/donation/${donation.id}">Szczegóły</a>
                     </td>
                 </tr>

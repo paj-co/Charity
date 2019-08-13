@@ -20,6 +20,7 @@ import pl.coderslab.charity.service.UserService;
 import pl.coderslab.charity.validation.ValidationGroupChangeUserData;
 import pl.coderslab.charity.validation.ValidationGroupChangeUserPassword;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -164,8 +165,16 @@ public class UserController {
     //User donations
 
     @GetMapping("/donations")
-    public String userDonations(@AuthenticationPrincipal CurrentUser currentUser, Model model) {
-        model.addAttribute("donations", donationRepository.findDonationsByUser_Id(currentUser.getUser().getId()));
+    public String userDonations(@AuthenticationPrincipal CurrentUser currentUser, Model model, @RequestParam String sort) {
+        List<Donation> donations = null;
+        if(sort.equals("created")) {
+            donations = donationRepository.findDonationsByUser_IdOrderByCreatedDesc(currentUser.getUser().getId());
+        } else if (sort.equals("picked-up")) {
+            donations = donationRepository.findDonationsByUser_IdOrderByPickedUpDesc(currentUser.getUser().getId());
+        } else if (sort.equals("take-over-date")) {
+            donations = donationRepository.findDonationsByUser_IdOrderByTakeOverDateDesc(currentUser.getUser().getId());
+        }
+        model.addAttribute("donations", donations);
         return "user/userDonations";
     }
 

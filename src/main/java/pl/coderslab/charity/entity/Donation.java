@@ -54,11 +54,11 @@ public @Data class Donation {
     private LocalDate takeOverDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime created;
+    private LocalDate created;
 
     @PrePersist
     public void prePersist() {
-        created = LocalDateTime.now();
+        created = LocalDate.now();
     }
 
 

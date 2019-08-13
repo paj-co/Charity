@@ -7,7 +7,7 @@
         <ul class="dropdown">
             <li><a href="/user/profile">Profil</a></li>
             <li><a href="#">Ustawienia</a></li>
-            <li><a href="/user/donations">Moje dary</a></li>
+            <li><a href="/user/donations?sort=created">Moje dary</a></li>
             <li>
                 <form action="<c:url value="/logout"/>" method="post">
                     <input type="submit" value="Wyloguj"/>
