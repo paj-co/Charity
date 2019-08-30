@@ -49,10 +49,13 @@ public class UserController {
     }
 
     @GetMapping("/update/{userId}")
-    public String userUpdate(@PathVariable long userId, Model model) {
+    public String userUpdate(@AuthenticationPrincipal CurrentUser currentUser, @PathVariable long userId, Model model) {
         Optional<User> adminOptional = userRepository.findById(userId);
         if(adminOptional.isPresent()) {
             User user = adminOptional.get();
+            if(!currentUser.getUser().getId().equals(user.getId())) {
+                return "redirect:/user/403";
+            }
 //            List<Role> allRoles = roleRepository.findAll();
 //            allRoles.removeAll(user.getRoles());
 
@@ -117,10 +120,13 @@ public class UserController {
     }
 
     @GetMapping("/update/password/{userId}")
-    public String userUpdatePassword(@PathVariable long userId, Model model) {
-        Optional<User> adminOptional = userRepository.findById(userId);
-        if(adminOptional.isPresent()) {
-            User user = adminOptional.get();
+    public String userUpdatePassword(@AuthenticationPrincipal CurrentUser currentUser, @PathVariable long userId, Model model) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isPresent()) {
+            User user = userOptional.get();
+            if(!currentUser.getUser().getId().equals(user.getId())) {
+                return "redirect:/user/403";
+            }
 
             UserDTO userDTO = new UserDTO();
             userDTO.setId(user.getId());
@@ -187,7 +193,12 @@ public class UserController {
                 return "user/userDonationDetails";
             }
         }
-        return "redirect:/user/donations";
+        return "redirect:/user/403";
+    }
+
+    @GetMapping("/403")
+    public String user403() {
+        return "user/user403";
     }
 
 
