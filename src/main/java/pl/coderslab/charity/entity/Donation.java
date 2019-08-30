@@ -1,13 +1,13 @@
 package pl.coderslab.charity.entity;
 
 import lombok.Data;
-import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -43,5 +43,23 @@ public @Data class Donation {
     private String pickUpComment;
     @NotBlank
     private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    private boolean pickedUp;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate takeOverDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate created;
+
+    @PrePersist
+    public void prePersist() {
+        created = LocalDate.now();
+    }
+
 
 }
