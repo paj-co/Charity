@@ -7,19 +7,21 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Strona główna</title>
-
-    <link rel="stylesheet" href="<c:url value="resources/css/style.css"/>"/>
+    <title>403 | Charity</title>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
 <body>
-<header class="header--main-page">
+<header>
     <nav class="container container--70">
-        <%@ include file="action-header-not-logged.jsp"%>
-        <%@ include file="action-header-logged.jsp"%>
-        <%@ include file="header.jsp"%>
+        <%@ include file="../action-header-not-logged.jsp"%>
+        <%@ include file="../action-header-logged.jsp"%>
+        <%@ include file="../header.jsp"%>
     </nav>
 </header>
+<section class="login-page">
+    <h2 style="color: red">Dostęp zabroniony!</h2>
+</section>
 
-<h1>Dostęp zabroniony</h1>
+<%@ include file="../footer.jsp" %>
 </body>
 </html>

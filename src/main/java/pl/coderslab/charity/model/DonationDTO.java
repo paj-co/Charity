@@ -1,8 +1,11 @@
-package pl.coderslab.charity.entity;
+package pl.coderslab.charity.model;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import pl.coderslab.charity.validation.ValidationGroupCreateDonation;
+import pl.coderslab.charity.entity.Category;
+import pl.coderslab.charity.entity.Institution;
+import pl.coderslab.charity.entity.User;
+import pl.coderslab.charity.validation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,11 +14,22 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@Entity
-public @Data class Donation {
+@DateWhenPickedUpChecked(
+        groups = {ValidationGroupChangePickUpDetails.class},
+        isChecked = "pickedUp",
+        actualPickedUpDate = "takeOverDate",
+        message = "Gdy zaznaczono \"Odebrane\", podaj także datę!"
+)
+@NoDateWhenCheckboxIsChecked(
+        groups = {ValidationGroupChangePickUpDetails.class},
+        isChecked = "pickedUp",
+        actualPickedUpDate = "takeOverDate",
+        message = "Gdy odznaczono \"Odebrane\", wyczyść pole z datą!"
+)
+@TakeOverDate(groups = {ValidationGroupChangePickUpDetails.class},
+    message = "Data musi być pomiędzy datą utworzenia dotacji i dniem dzisiejszym")
+public @Data class DonationDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer quantity;
@@ -36,7 +50,7 @@ public @Data class Donation {
     @NotBlank(groups = {ValidationGroupCreateDonation.class})
     private String zipCode;
     @NotNull(groups = {ValidationGroupCreateDonation.class})
-    @DateTimeFormat(pattern = "yyyy-MM-dd") //iso znany format
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate pickUpDate;
     @NotNull(groups = {ValidationGroupCreateDonation.class})
     private LocalTime pickUpTime;
@@ -58,11 +72,6 @@ public @Data class Donation {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfUserActualizationOfPickUpDetails;
-
-    @PrePersist
-    public void prePersist() {
-        created = LocalDate.now();
-    }
 
 
 }
