@@ -16,7 +16,7 @@ public class TakeOverDateValidator implements ConstraintValidator<TakeOverDate, 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
         DonationDTO donationDTO = (DonationDTO) o;
-        if(donationDTO.isPickedUp()) {
+        if (donationDTO.isPickedUp() && donationDTO.getTakeOverDate() != null) {
             if (donationDTO.getCreated() == null) {
                 return donationDTO.getTakeOverDate().isBefore(LocalDate.now().plusDays(1));
             }
