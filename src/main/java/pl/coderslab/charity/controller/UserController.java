@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.entity.Donation;
 import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.model.CurrentUser;
+import pl.coderslab.charity.model.DonationDTO;
 import pl.coderslab.charity.model.UserDTO;
 import pl.coderslab.charity.repository.DonationRepository;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.UserService;
+import pl.coderslab.charity.validation.ValidationGroupChangePickUpDetails;
 import pl.coderslab.charity.validation.ValidationGroupChangeUserData;
 import pl.coderslab.charity.validation.ValidationGroupChangeUserPassword;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -199,6 +202,48 @@ public class UserController {
     @GetMapping("/403")
     public String user403() {
         return "user/user403";
+    }
+
+    @GetMapping("/donation/{donationId}/take-over-update")
+    public String userDonationDetailsTakeOverUpdate(@PathVariable long donationId, @AuthenticationPrincipal CurrentUser currentUser,
+                                                    Model model) {
+        Optional<Donation> donationOptional = donationRepository.findById(donationId);
+        if(donationOptional.isPresent()) {
+            Donation donation = donationOptional.get();
+            if(!currentUser.getUser().getId().equals(donation.getUser().getId())) {
+                return "redirect:/user/403";
+            }
+            //data for viewing
+            model.addAttribute("donation", donation);
+            //data to change
+            DonationDTO donationDTO = new DonationDTO();
+            donationDTO.setTakeOverDate(donation.getTakeOverDate());
+            donationDTO.setPickedUp(donation.isPickedUp());
+            donationDTO.setCreated(donation.getCreated());
+            model.addAttribute("donationUpdate", donationDTO);
+            return "user/userDonationDetailsUpdateForm";
+        }
+        return "redirect:/user/403";
+    }
+
+    @PostMapping("/donation/{donationId}/take-over-update")
+    public String userDonationDetailsTakeOverUpdate(@PathVariable long donationId,
+                                                    @ModelAttribute("donationUpdate") @Validated({ValidationGroupChangePickUpDetails.class}) DonationDTO donationUpdate,
+                                                    BindingResult bindingResult, Model model) {
+        Optional<Donation> donationOptional = donationRepository.findById(donationId);
+        if(donationOptional.isPresent()) {
+            Donation donation = donationOptional.get();
+            if(bindingResult.hasErrors()) {
+                model.addAttribute("donation", donation);
+                return "user/userDonationDetailsUpdateForm";
+            }
+            donation.setDateOfUserActualizationOfPickUpDetails(LocalDate.now());
+            donation.setPickedUp(donationUpdate.isPickedUp());
+            donation.setTakeOverDate(donationUpdate.getTakeOverDate());
+            donationRepository.save(donation);
+            return "redirect:/user/donation/" + donation.getId();
+        }
+        return "redirect:/user/403";
     }
 
 

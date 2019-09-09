@@ -2,12 +2,12 @@ package pl.coderslab.charity.entity;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import pl.coderslab.charity.validation.ValidationGroupCreateDonation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -28,20 +28,20 @@ public @Data class Donation {
     @JoinColumn(name = "institution_id")
     private Institution institution;
 
-    @NotBlank
+    @NotBlank(groups = {ValidationGroupCreateDonation.class})
     private String street;
-    @NotBlank
+    @NotBlank(groups = {ValidationGroupCreateDonation.class})
     private String city;
     //TODO REGEX
-    @NotBlank
+    @NotBlank(groups = {ValidationGroupCreateDonation.class})
     private String zipCode;
-    @NotNull
+    @NotNull(groups = {ValidationGroupCreateDonation.class})
     @DateTimeFormat(pattern = "yyyy-MM-dd") //iso znany format
     private LocalDate pickUpDate;
-    @NotNull
+    @NotNull(groups = {ValidationGroupCreateDonation.class})
     private LocalTime pickUpTime;
     private String pickUpComment;
-    @NotBlank
+    @NotBlank(groups = {ValidationGroupCreateDonation.class})
     private String phone;
 
     @ManyToOne
@@ -55,6 +55,9 @@ public @Data class Donation {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate created;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateOfUserActualizationOfPickUpDetails;
 
     @PrePersist
     public void prePersist() {

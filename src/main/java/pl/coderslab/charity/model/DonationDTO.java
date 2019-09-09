@@ -5,10 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import pl.coderslab.charity.entity.Category;
 import pl.coderslab.charity.entity.Institution;
 import pl.coderslab.charity.entity.User;
-import pl.coderslab.charity.validation.DateWhenPickedUpChecked;
-import pl.coderslab.charity.validation.NoDateWhenCheckboxIsChecked;
-import pl.coderslab.charity.validation.ValidationGroupChangePickUpDetails;
-import pl.coderslab.charity.validation.ValidationGroupCreateDonation;
+import pl.coderslab.charity.validation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -29,6 +26,8 @@ import java.util.List;
         actualPickedUpDate = "takeOverDate",
         message = "Gdy odznaczono \"Odebrane\", wyczyść pole z datą!"
 )
+@TakeOverDate(groups = {ValidationGroupChangePickUpDetails.class},
+    message = "Data musi być pomiędzy datą utworzenia dotacji i dniem dzisiejszym")
 public @Data class DonationDTO {
 
     private Long id;

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -101,60 +102,55 @@
                 <div class="form-section--column">
                     <h4>
                         Faktyczny odbiór:
-                        <a href="/user/donation/${donation.id}/take-over-update">
-                            <button style="background-color: orange; border-radius: 5px;">Aktualizuj</button>
-                        </a>
                     </h4>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td style="color: gray;">Zaktualizowano:</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${empty donation.dateOfUserActualizationOfPickUpDetails}">
-                                        brak
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${donation.dateOfUserActualizationOfPickUpDetails}
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="color: gray;">Odebrano:</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${donation.pickedUp == 'true'}" >
-                                        tak
-                                    </c:when>
-                                    <c:otherwise>
-                                        nie
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="color: gray;">Data odbioru:</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${empty donation.takeOverDate}">
-                                        brak
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${donation.takeOverDate}
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <form:form method="post" modelAttribute="donationUpdate" >
+                        <form:hidden path="created" />
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td style="color: gray;">Zaktualizowano:</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${empty donation.dateOfUserActualizationOfPickUpDetails}">
+                                            brak
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${donation.dateOfUserActualizationOfPickUpDetails}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color: gray;">Odebrano:</td>
+                                <td>
+                                    <form:checkbox path="pickedUp" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color: gray; vertical-align: top;">Data odbioru:</td>
+                                <td>
+                                    <form:input path="takeOverDate" placeholder="rrrr-mm-dd" />
+                                    <form:errors element="p" cssClass="error" />
+                                    <form:errors path="takeOverDate" element="p" cssClass="error" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color: gray;">
+                                    <input type="submit" value="Zapisz" />
+                                </td>
+                                <td>
+                                    <a href="/user/donation/${donation.id}">
+                                        <button type="button">Anuluj</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form:form>
                 </div>
             </div>
         </div>
     </div>
-    <a class="btn" href="/user/donations?sort=created">
-        Powrot do listy darów
-    </a>
 </section>
 
 <%@ include file="../footer.jsp" %>
