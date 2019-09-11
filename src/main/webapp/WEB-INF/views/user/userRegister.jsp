@@ -42,7 +42,7 @@
         </div>
         <div class="form-group">
             <form:password path="matchingPassword" name="password2" placeholder="Powtórz hasło" />
-            <form:errors path="*" cssClass="error" element="p" />
+            <form:errors cssClass="error" element="p" />
 <%--            <c:if test="${not empty pass1NotEqPass2}">--%>
 <%--                <p class="error">${pass1NotEqPass2}</p>--%>
 <%--            </c:if>--%>

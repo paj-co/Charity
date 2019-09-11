@@ -10,11 +10,12 @@ import pl.coderslab.charity.validation.ValidationGroupRegisterUser;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Set;
 
-@PasswordMatches(groups = {ValidationGroupRegisterUser.class, ValidationGroupChangeUserPassword.class})
+@PasswordMatches(groups = {ValidationGroupRegisterUser.class, ValidationGroupChangeUserPassword.class},
+        message = "Powtórzone hasło różni się od pierwszego.")
 @Component
 public @Data class UserDTO {
 
@@ -29,7 +30,9 @@ public @Data class UserDTO {
     @NotBlank(groups = {ValidationGroupRegisterUser.class, ValidationGroupChangeUserData.class})
     private String lastName;
 
-    @Size(min = 3, max = 10, groups = {ValidationGroupRegisterUser.class, ValidationGroupChangeUserPassword.class})
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*?])[a-zA-Z0-9!@#$%^&*?]{8,20}$",
+            groups = {ValidationGroupRegisterUser.class, ValidationGroupChangeUserPassword.class},
+            message = "Czy hasło zawiera wielkie i małe litery, cyfry i znaki specjalne? Powinno mieć od 8 - 20 znaków.")
     private String password;
 
     private String matchingPassword;
