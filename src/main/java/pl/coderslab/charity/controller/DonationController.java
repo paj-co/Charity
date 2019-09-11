@@ -57,6 +57,9 @@ public class DonationController {
     public String donationsForm(@ModelAttribute @Valid Donation donation, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("errorMessage", "W formularzu są błędy! Upewnij się, że wszystkie pola zostały poprawnie wypełnione!");
+            if(donation.getCategories() != null && donation.getCategories().size() > 0) {
+                model.addAttribute("againCheckCategory", "Ponownie zaznacz kategorię");
+            }
             return "form";
         }
         donationRepository.save(donation);

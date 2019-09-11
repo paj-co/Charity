@@ -5,8 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import pl.coderslab.charity.validation.ValidationGroupCreateDonation;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -18,8 +17,11 @@ public @Data class Donation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Pole nie może być puste")
+    @Min(value = 1, message = "Przynajniej jeden worek")
     private Integer quantity;
 
+    @NotEmpty(message = "Zaznacz chociaż jedną kategorię")
     @ManyToMany
     @JoinTable(name = "donations_categories", joinColumns = @JoinColumn(name ="donation_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
@@ -28,20 +30,25 @@ public @Data class Donation {
     @JoinColumn(name = "institution_id")
     private Institution institution;
 
-    @NotBlank(groups = {ValidationGroupCreateDonation.class})
+    @NotBlank(message = "Pole nie może być puste")
     private String street;
-    @NotBlank(groups = {ValidationGroupCreateDonation.class})
+    @NotBlank(message = "Pole nie może być puste")
     private String city;
-    //TODO REGEX
-    @NotBlank(groups = {ValidationGroupCreateDonation.class})
+    @Pattern(regexp = "^$|^([0-9]){2}-([0-9]){3}$", message = "Niepoprawny format kodu pocztowego")
+    @NotBlank(message = "Pole nie może być puste")
     private String zipCode;
-    @NotNull(groups = {ValidationGroupCreateDonation.class})
+
+    @NotNull(message = "Podaj datę")
     @DateTimeFormat(pattern = "yyyy-MM-dd") //iso znany format
+    @Future(message = "Podaj datę z przyszłości")
     private LocalDate pickUpDate;
-    @NotNull(groups = {ValidationGroupCreateDonation.class})
+    @NotNull(message = "Podaj godzinę")
     private LocalTime pickUpTime;
     private String pickUpComment;
-    @NotBlank(groups = {ValidationGroupCreateDonation.class})
+
+    @Pattern(regexp = "^$|^(\\+48|\\+48 )?(([0-9]{9}|[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2}|[0-9]{2} [0-9]{3}-[0-9]{2}-[0-9]{2})|([0-9]{3} [0-9]{3} [0-9]{3}|([0-9]{3}-[0-9]{3}-[0-9]{3}|([0-9]{3}))))$",
+    message = "Niepoprawny format numeru telefonu")
+    @NotBlank(message = "Pole nie może być puste")
     private String phone;
 
     @ManyToOne
