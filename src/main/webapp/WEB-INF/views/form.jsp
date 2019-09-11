@@ -87,6 +87,10 @@
                         </label>
                     </div>
                 </c:forEach>
+                <form:errors path="categories" cssClass="error" element="p" />
+                <c:if test="${not empty againCheckCategory}" >
+                    <p class="error">${againCheckCategory}</p>
+                </c:if>
 
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn next-step">Dalej</button>
@@ -101,6 +105,9 @@
                     <label>
                         Liczba 60l worków:
                         <form:input path="quantity" type="number" min="1" step="1" />
+                    </label>
+                    <label>
+                        <form:errors path="quantity" cssClass="error" element="p" />
                     </label>
                 </div>
 
@@ -160,21 +167,29 @@
                         <h4>Adres odbioru</h4>
                         <div class="form-group form-group--inline">
                             <label> Ulica <form:input data-type="street" path="street" /> </label>
+                            <label> <form:errors path="street" cssClass="error" element="p" /> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label> Miasto <form:input data-type="city" path="city" /> </label>
+                            <label> <form:errors path="city" cssClass="error" element="p" /> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
                                 Kod pocztowy <form:input data-type="zipCode" path="zipCode" />
                             </label>
+                            <label>
+                                <form:errors path="zipCode" cssClass="error" element="p" />
+                            </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
                                 Numer telefonu <form:input path="phone" data-type="phone" type="tel"/>
+                            </label>
+                            <label>
+                                <form:errors path="phone" cssClass="error" element="p"/>
                             </label>
                         </div>
                     </div>
@@ -183,10 +198,12 @@
                         <h4>Termin odbioru</h4>
                         <div class="form-group form-group--inline">
                             <label> Data <form:input path="pickUpDate" type="date" /> </label>
+                            <label><form:errors path="pickUpDate" cssClass="error" element="p" /> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label> Godzina <form:input path="pickUpTime" type="time"/> </label>
+                            <label><form:errors path="pickUpTime" cssClass="error" element="p"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
