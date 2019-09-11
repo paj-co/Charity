@@ -46,7 +46,7 @@
         <div class="form-group fontCustom">
             Powtórz hasło:
             <form:password path="matchingPassword" placeholder="Powtórz nowe hasło"/>
-            <form:errors path="*" cssClass="error" element="p" />
+            <form:errors cssClass="error" element="p" />
                 <%--            <c:if test="${not empty pass1NotEqPass2}">--%>
                 <%--                <p class="error">${pass1NotEqPass2}</p>--%>
                 <%--            </c:if>--%>
