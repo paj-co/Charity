@@ -5,8 +5,8 @@ Used technology: Spring Boot, Spring Form, Spring Data, Spring Security, Hiberna
 
 Project purpose: to ease and simplify the process of giving up your stuff to charities.
 
-####Main features: 
-- #####for users:
+#### Main features: 
+- ##### for users:
     - user account creation (register and login, validation)
     - donation form
     - managing user donation 
@@ -15,13 +15,13 @@ Project purpose: to ease and simplify the process of giving up your stuff to cha
     - changing password
     
 ![](images/charity_donation_form_error.png)
-- #####for admins:
+- ##### for admins:
     - managing trusted charities
     - managing admins (edit, change roles, activate / deactivate, deletion)
     - managing users (edit, change roles, activate / deactivate, deletion)
 
 ![](images/charity_admin.png)
-#####Future features / things TO-DO
+##### Future features / things TO-DO
 - code refactor (clean up, transfer of logic from controllers to services)
 - email sending
 - account activation by email
