@@ -1,4 +1,4 @@
-## Charity App | Help charities by giving up your staff
+## Charity App | Help charities by giving up your stuff
 
 
 Used technologies: Spring Boot, Spring Form, Spring Data, Spring Security, Hibernate, JSP + JSTL.
